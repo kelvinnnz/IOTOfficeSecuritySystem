@@ -9,6 +9,8 @@ Our project is a security and IOT based system which uses motion sensing 'trigge
 https://dev.mysql.com/downloads/workbench/
 ```
 
-## Deployment
+#### More Details
 
-Add additional notes about how to deploy this on a live system
+```
+https://www.hackster.io/junnius/office-security-system-6a2ebd
+```
