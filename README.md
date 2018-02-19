@@ -14,3 +14,8 @@ https://dev.mysql.com/downloads/workbench/
 ```
 https://www.hackster.io/junnius/office-security-system-6a2ebd
 ```
+
+
+## License
+
+[MIT](https://github.com/kelvinnnz/IOTOfficeSecuritySystem/blob/master/LICENSE)
