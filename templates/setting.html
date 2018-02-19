@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Settings</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/content.css">
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">IOT-CA2</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="{{ url_for('home') }}">
+                            <i class="fas fa-home"></i> Home
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('chart') }}">
+                            <i class="fas fa-history"></i> History
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ url_for('setting') }}"><i class="fas fa-cogs"></i> Settings<span class="sr-only">(current)</span></a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- End of Navbar -->
+    <!-- Header -->
+    <div class="container">
+        <div class="jumbotron">
+            <h1>
+                <i class="fas fa-building"></i> Office Security System
+            </h1>
+            <hr>
+            <p>A simple office security system!</p>
+        </div>
+
+        <!-- Button -->
+        <div class="container body-content">
+            <h2>
+                <i class="fa fa-arrow-down"></i> Click below to turn the system On/Off!
+                <i class="fa fa-arrow-down"></i>
+            </h2>
+            <!-- Rounded switch -->
+            <label>System State</label>
+            <a class="toggle-btn tab contentbox ">
+                <input type="checkbox" checked class="cb-value" value="Disabled" />
+                <span class="round-btn"></span>
+            </a>
+            <h2 id="sysStatus"></h2>
+        </div>
+        <!-- End of Button -->
+
+
+    </div>
+    <!-- End of Header -->
+    <!-- Footer -->
+    <div class="container">
+        <hr> &copy;
+        <script type="text/javascript">
+            document.write(new Date().getFullYear());
+        </script> - IOT-CA2
+    </div>
+    <!-- End of Footer -->
+    <!-- Javascript -->
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+    <script>
+        $(window).load(function () {
+
+            $.ajax({
+                url: "GetSystem",
+                success: function (result) {
+                    if (result == "Enabled") {
+                        $(".cb-value").val(result);
+                        $(".toggle-btn").addClass('active');
+                        $("#status").text("System is running!");
+                    }
+                    else {
+                        $(".cb-value").val(result);
+                        $(".toggle-btn").removeClass('active');
+                        $("#status").text("System is not running!");
+                    }
+                }
+            })
+
+            $('.toggle-btn').on('click', function (e) {
+                if ($('.cb-value').val() == "Enabled") {
+                    $(this).removeClass('active');
+                    $('.cb-value').val("Disabled");
+                    console.log($('.cb-value').val());
+                    
+                    $.ajax({
+                        type: "GET",
+                        url: "/System/Disabled"
+                    }).done(function () {
+                        $("#status").text("System is turned off!");
+                    });
+
+                }
+                else {
+                    $(this).addClass('active');
+                    $('.cb-value').val("Enabled");
+                    console.log($('.cb-value').val());
+                    $.ajax({
+                        type: "GET",
+                        url: "/System/Enabled"
+                    }).done(function () {
+                        $("#status").text("System is turned on!");
+                    });
+                }
+
+
+            });
+        });
+    </script>
+</body>
+
+</html>
